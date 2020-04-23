@@ -1,0 +1,11 @@
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\bin\Debug\netcoreapp3.1\PigLatinTranslator.exe
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\bin\Debug\netcoreapp3.1\PigLatinTranslator.deps.json
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\bin\Debug\netcoreapp3.1\PigLatinTranslator.runtimeconfig.json
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\bin\Debug\netcoreapp3.1\PigLatinTranslator.runtimeconfig.dev.json
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\bin\Debug\netcoreapp3.1\PigLatinTranslator.dll
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\bin\Debug\netcoreapp3.1\PigLatinTranslator.pdb
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\obj\Debug\netcoreapp3.1\PigLatinTranslator.csprojAssemblyReference.cache
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\obj\Debug\netcoreapp3.1\PigLatinTranslator.AssemblyInfoInputs.cache
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\obj\Debug\netcoreapp3.1\PigLatinTranslator.AssemblyInfo.cs
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\obj\Debug\netcoreapp3.1\PigLatinTranslator.dll
+C:\Users\imWUMPUS\source\repos\CSharp_April2020\PigLatinTranslator\PigLatinTranslator\obj\Debug\netcoreapp3.1\PigLatinTranslator.pdb
