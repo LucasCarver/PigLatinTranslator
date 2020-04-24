@@ -4,7 +4,7 @@ namespace PigLatinTranslator
 {
     class Program
     {
-        private static string SYMBOL_LIST = @"0123456789!@#$%^&*()_+-=[]{}\|:<>,.'""";
+        private static string SYMBOL_LIST = @"0123456789!@#$%^&*()_+-=[]{}\|:<>,.'`~""";
         private static string VOWEL_LIST = "aeiou";
 
         static void Main(string[] args)
@@ -94,11 +94,11 @@ namespace PigLatinTranslator
             {
                 beginningConsonants = GetBeginningConsonants(input, true);
                 firstVowelIndex = beginningConsonants.Length;
-                output = String.Concat(input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length), beginningConsonants + "ay");
+                output = input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length) + beginningConsonants + "ay";
             }
             else if (ContainsSymbol(input, VOWEL_LIST))
             {
-                output = String.Concat(input, "way");
+                output = input + "way";
             }
             else
             {
@@ -126,11 +126,9 @@ namespace PigLatinTranslator
         {
             string consonants = "";
             char testChar;
-            bool upperCase;
             bool breakLoop = true;
             for (int i = 0; (i < input.Length) || breakLoop != true; i++)
             {
-                upperCase = char.IsUpper(input[i]);
                 testChar = char.ToLower(input[i]);
                 if (IsVowel(testChar))
                 {
@@ -241,7 +239,6 @@ namespace PigLatinTranslator
                     words[i] = PigLatinWord(words[i]);
                     outSentence += words[i] + " ";
                 }
-
             }
             return outSentence;
         }
