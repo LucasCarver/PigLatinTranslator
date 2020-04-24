@@ -104,7 +104,7 @@ namespace PigLatinTranslator
             {
                 beginningConsonants = GetBeginningConsonants(input);
                 firstVowelIndex = beginningConsonants.Length;
-                output = input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length) + beginningConsonants + "ay");
+                output = input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length) + beginningConsonants + "ay";
             }
             return output;
         }
