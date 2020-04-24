@@ -4,18 +4,32 @@ namespace PigLatinTranslator
 {
     class Program
     {
+        private static string SYMBOL_LIST = @"0123456789!@#$%^&*()_+-=[]{}\|:<>,.'""";
+        private static string VOWEL_LIST = "aeiou";
+
         static void Main(string[] args)
         {
-            string normalWord;
-            string outWord;
+            string bigInput;
+            string bigOutput;
+            bool isEmpty;
+
             Console.WriteLine("Pig Latin Translator");
 
             do
             {
-                normalWord = PromptUser("Enter a word / sentence to translate to pig latin.");
-                outWord = PigLatinSentence(normalWord);
-                Console.WriteLine(outWord);
-            } while (!ExitLoop("Would you like to translate another word?"));
+                isEmpty = false;
+                bigInput = PromptUser("Enter a line to be translated.");
+                if (String.IsNullOrEmpty(bigInput))
+                {
+                    Console.WriteLine("Input is null or empty.");
+                    isEmpty = true;
+                }
+                else
+                {
+                    bigOutput = PigLatinSentence(bigInput);
+                    Console.WriteLine(bigOutput.Trim());
+                }
+            } while (isEmpty||!ExitLoop("Translate again?"));
         }
 
         public static string PromptUser(string prompt)
@@ -58,29 +72,67 @@ namespace PigLatinTranslator
             string output = "";
             string beginningConsonants;
 
-            if (input.StartsWith("a") || input.StartsWith("e") || input.StartsWith("i") ||
-                input.StartsWith("o") || input.StartsWith("u"))
+            if (GetFirstVowel(input.ToCharArray()) == 0)
+            {
+                output = input + "way";
+            }
+            else
+            {
+                beginningConsonants = GetBeginningConsonants(input);
+                int firstVowelIndex = beginningConsonants.Length;
+                output = input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length) + beginningConsonants + "ay";
+            }
+            return output;
+        }
+
+        public static string PigLatinWord(string input, bool noVowels)
+        {
+            string output = "";
+            string beginningConsonants;
+            int firstVowelIndex;
+            if (noVowels)
+            {
+                beginningConsonants = GetBeginningConsonants(input, true);
+                firstVowelIndex = beginningConsonants.Length;
+                output = String.Concat(input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length), beginningConsonants + "ay");
+            }
+            else if (ContainsSymbol(input, VOWEL_LIST))
             {
                 output = String.Concat(input, "way");
             }
             else
             {
                 beginningConsonants = GetBeginningConsonants(input);
-                int firstVowelIndex = beginningConsonants.Length;
-                output = String.Concat(input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length), beginningConsonants + "ay");
+                firstVowelIndex = beginningConsonants.Length;
+                output = input.Substring(firstVowelIndex, input.Length - beginningConsonants.Length) + beginningConsonants + "ay");
             }
             return output;
+        }
+
+        public static int GetFirstVowel(char[] word)
+        {
+            for (int i = 0; i < word.Length; i++)
+            {
+                char letter = word[i];
+                if (IsVowel(letter))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         public static string GetBeginningConsonants(string input)
         {
             string consonants = "";
-            string testChar = "";
+            char testChar;
+            bool upperCase;
             bool breakLoop = true;
-            for(int i = 0; (i < input.Length) || breakLoop != true; i++)
+            for (int i = 0; (i < input.Length) || breakLoop != true; i++)
             {
-                testChar = input.Substring(i, 1).ToLower();
-                if(testChar == "a" || testChar == "e" || testChar == "i" || testChar == "o" || testChar == "u")
+                upperCase = char.IsUpper(input[i]);
+                testChar = char.ToLower(input[i]);
+                if (IsVowel(testChar))
                 {
                     breakLoop = true;
                     break;
@@ -93,16 +145,130 @@ namespace PigLatinTranslator
             return consonants;
         }
 
+        public static string GetBeginningConsonants(string input, bool noVowels)
+        {
+            string consonants = "";
+            char testChar;
+            bool breakLoop = true;
+            if (noVowels)
+            {
+
+                for (int i = 0; (i < input.Length) || breakLoop != true; i++)
+                {
+                    testChar = char.ToLower(input[i]);
+                    if (testChar == 'y')
+                    {
+                        breakLoop = true;
+                        break;
+                    }
+                    else
+                    {
+                        consonants += testChar;
+                    }
+                }
+                return consonants;
+            }
+            else
+            {
+                for (int i = 0; (i < input.Length) || breakLoop != true; i++)
+                {
+                    testChar = char.ToLower(input[i]);
+                    if (ContainsSymbol(input, VOWEL_LIST))
+                    {
+                        breakLoop = true;
+                        break;
+                    }
+                    else
+                    {
+                        consonants += testChar;
+                    }
+                }
+                return consonants;
+            }
+        }
+
         public static string PigLatinSentence(string sentence)
         {
+
+            string punctList = @".?!,:;-()[]'""";
             string outSentence = "";
             string[] words = sentence.Split(" ");
+            bool punctFlag;
             for (int i = 0; i < words.Length; i++)
             {
-                words[i] = PigLatinWord(words[i]);
-                outSentence += words[i] + " ";
+                punctFlag = false;
+                if (ContainsSymbol(words[i], punctList))
+                {
+                    foreach (char c in punctList)
+                    {
+                        if (words[i].EndsWith(c))
+                        {
+                            words[i] = PigLatinWord(words[i].Substring(0, words[i].Length - 1));
+                            outSentence += words[i] + c + " ";
+                            punctFlag = true;
+                        }
+                    }
+                }
+
+                if (punctFlag)
+                {
+                    continue;
+                }
+
+                if (int.TryParse(words[i], out int num))
+                {
+                    words[i] = num.ToString();
+                    outSentence += words[i] + " ";
+                }
+                else if (words[i].EndsWith("'t") || words[i].EndsWith("'ve") || words[i].EndsWith("'s") || words[i].EndsWith("'re") || words[i].EndsWith("'d") ||
+                        words[i].EndsWith("'ll") || words[i].EndsWith("'m") || words[i].EndsWith("'d") || words[i].EndsWith("'all") || words[i].EndsWith("'a") ||
+                        words[i].EndsWith("'am") || words[i].EndsWith("'ye") || words[i].EndsWith("'er"))
+                {
+                    words[i] = PigLatinWord(words[i]);
+                    outSentence += words[i] + " ";
+                }
+                else if (ContainsSymbol(words[i], SYMBOL_LIST))
+                {
+                    outSentence += words[i] + " ";
+                }
+                else if (!ContainsSymbol(words[i], VOWEL_LIST))
+                {
+                    words[i] = PigLatinWord(words[i], true);
+                    outSentence += words[i] + " ";
+                }
+                else
+                {
+                    words[i] = PigLatinWord(words[i]);
+                    outSentence += words[i] + " ";
+                }
+
             }
             return outSentence;
+        }
+
+        public static bool ContainsSymbol(string word, string specialChars)
+        {
+
+            foreach (char c in specialChars)
+            {
+                if (word.Contains(c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsVowel(char letter)
+        {
+            foreach (char c in VOWEL_LIST)
+            {
+                if (letter == c)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
