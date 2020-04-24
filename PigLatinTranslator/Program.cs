@@ -13,7 +13,7 @@ namespace PigLatinTranslator
             string bigOutput;
             bool isEmpty;
 
-            Console.WriteLine("Pig Latin Translator");
+            Console.WriteLine("Pig Latin Translator\n");
 
             do
             {
