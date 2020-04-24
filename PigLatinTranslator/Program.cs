@@ -5,7 +5,7 @@ namespace PigLatinTranslator
     class Program
     {
         private static string SYMBOL_LIST = @"0123456789!@#$%^&*()_+-=[]{}\|:<>,.'`~""";
-        private static string VOWEL_LIST = "aeiou";
+        private static string VOWEL_LIST = "AEIOUaeiou";
 
         static void Main(string[] args)
         {
@@ -29,7 +29,7 @@ namespace PigLatinTranslator
                     bigOutput = PigLatinSentence(bigInput);
                     Console.WriteLine(bigOutput.Trim());
                 }
-            } while (isEmpty||!ExitLoop("Translate again?"));
+            } while (isEmpty || !ExitLoop("Translate again?"));
         }
 
         public static string PromptUser(string prompt)
@@ -129,7 +129,7 @@ namespace PigLatinTranslator
             bool breakLoop = true;
             for (int i = 0; (i < input.Length) || breakLoop != true; i++)
             {
-                testChar = char.ToLower(input[i]);
+                testChar = input[i];
                 if (IsVowel(testChar))
                 {
                     breakLoop = true;
@@ -153,8 +153,8 @@ namespace PigLatinTranslator
 
                 for (int i = 0; (i < input.Length) || breakLoop != true; i++)
                 {
-                    testChar = char.ToLower(input[i]);
-                    if (testChar == 'y')
+                    testChar = input[i];
+                    if (testChar == 'y'|| testChar == 'Y')
                     {
                         breakLoop = true;
                         break;
